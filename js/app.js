@@ -15,11 +15,6 @@
 		$('#languageSwitch').click(function() {
 			DogPack.switchLanguage();
 		});
-
-		$('#score').find('small').click(function() {
-			DogPack.clearDogs();
-			window.location.href = '?' + Handlebars.helpers.getLanguageFilter(window.language.langId);
-		});
 	}
 
 	function renderDogs() {
@@ -32,6 +27,21 @@
 		$('#theDogs').html(rendered);
 		attachDogButtons();
 		renderPages(filteredDogs);
+		renderScore();
+	}
+
+	function renderScore() {
+		var template = $('#score-template').html(),
+			compiled = Handlebars.compile(template),
+			rendered = compiled({
+				dogs: DogPack.dogs,
+				language: window.language
+			});
+		$('#score').html(rendered);		
+		$('#score').find('small').click(function() {
+			DogPack.clearDogs();
+			window.location.href = '?' + Handlebars.helpers.getLanguageFilter(window.language.langId);
+		});
 	}
 
 	function renderPages(dogs) {

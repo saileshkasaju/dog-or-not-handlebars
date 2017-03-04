@@ -26,4 +26,14 @@ Handlebars.registerHelper('generatePages', function(dogs) {
 		});
 	}
 	return pages;
-})
+});
+
+Handlebars.registerHelper('generateScore', function(context, options) {
+	var score = DogPack.scoreDogs(context);
+	return options.fn({
+		correct: score.correct,
+		incorrect: score.incorrect,
+		incomplete: score.incomplete,
+		language: options.hash.language
+	});
+});
